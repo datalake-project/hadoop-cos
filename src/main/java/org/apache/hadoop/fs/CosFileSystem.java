@@ -376,7 +376,7 @@ public class CosFileSystem extends FileSystem {
     // pass ofs ranger client config to ofs
     private void passThroughRangerConfig() {
         // ofs ranger init get ranger policy auto
-        String ofsRangerKey = Constants.COSN_OFS_CONFIG_PREFIX.
+        String ofsRangerKey = Constants.COSN_CONFIG_TRANSFER_PREFIX.
                 concat(Constants.COSN_POSIX_BUCKCET_OFS_RANGER_FLAG);
         if (useOFSRanger()) {
             // set ofs ranger open
