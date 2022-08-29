@@ -217,7 +217,6 @@ public class CosNFileSystem extends FileSystem {
     @Override
     public FSDataOutputStream append(Path f, int bufferSize,
                                      Progressable progress) throws IOException {
-        checkPermission(f, RangerAccessType.WRITE);
         // 这里还需要判断是否是文件存储桶，如果是则可以支持
         if (!this.getConf().getBoolean(CosNConfigKeys.COSN_POSIX_EXTENSION_ENABLED,
                 CosNConfigKeys.DEFAULT_COSN_POSIX_EXTENSION_ENABLED)) {
