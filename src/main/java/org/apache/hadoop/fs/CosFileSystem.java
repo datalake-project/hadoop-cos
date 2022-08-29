@@ -109,8 +109,8 @@ public class CosFileSystem extends FileSystem {
                         CosNConfigKeys.DEFAULT_COSN_POSIX_BUCKET_FS_IMPL);
             }
 
-            LOG.info("The posix bucket [{}] use the class [{}] as the filesystem implementation.",
-                    bucket, posixBucketFSImpl);
+            LOG.info("The posix bucket [{}] use the class [{}] as the filesystem implementation, " +
+                            "use each ranger [{}]", bucket, posixBucketFSImpl, this.isPosixUseOFSRanger);
             // if ofs impl.
             // network version start from the 2.7.
             // sdk version start from the 1.0.4.
@@ -128,9 +128,6 @@ public class CosFileSystem extends FileSystem {
                 // before the init, must transfer the config and disable the range in ofs
                 this.transferOfsConfig();
                 // not close native store here, emr use.
-                if (useOFSRanger()) {
-                    this.rangerCredentialsClient.close();
-                }
             } else {
                 // Another class
                 throw new IOException(
@@ -494,7 +491,6 @@ public class CosFileSystem extends FileSystem {
     @Override
     public void close() throws IOException {
         LOG.info("begin to close cos file system");
-        this.rangerCredentialsClient.close();
         this.actualImplFS.close();
         if (null != this.nativeStore && this.isDefaultNativeStore) {
             // close range client later, inner native store
